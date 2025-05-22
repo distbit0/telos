@@ -1,72 +1,23 @@
-# Node.js
-node_modules/
-.npm
-.node_repl_history
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-lerna-debug.log*
-pnpm-debug.log*
-.pnp.*
-.pnp.js
-.lock-wscript
-*.lock
-.yarn-integrity
+# dependencies
+node_modules
 
-# Build and Cache
-build/
-cache/
-dist
-.output
-.cache
-.nuxt
-.vuepress/dist
-.temp
-.fusebox/
-.dynamodb/
-.serverless/
-nohup.out
-tmp/
-.aider*
+# yarn
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
-# Coverage and Report
-coverage/
-lib-cov
-.nyc_output
-report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
-reports
-
-# Environment
-.env
-.env.local
-.env.*.local
-.vercel
-
-# IDE and Editor
-.vscode/
-.idea/
-.c9/
-*.log
-.history
-.tern-port
-
-# OS generated files
-.DS_Store
-*~
-
-# Compressed files
-*.tgz
-*.zip
-
-# ESLint
+# eslint
 .eslintcache
 
-# Yarn
-.yarn-integrity
+# misc
+.DS_Store
 
-# Yalc
-.yalc
+# IDE
+.vscode
+.idea
 
-# output and storage
-output/
-data/
+# cli
+dist
