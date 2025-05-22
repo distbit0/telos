@@ -1,0 +1,112 @@
+---
+
+### 1 . Project bootstrap
+
+* [x] **Clone** scaffold-eth-2; [x] **install** dependencies with yarn
+* [x] **Create `seerContracts.ts`** in `contracts/`
+  * [x] Paste MarketFactory, Router, MarketView, RealityProxy addresses for Gnosis Chain
+  * [x] Export an `as const` object and add it to `externalContracts.ts`
+
+---
+
+### 2 . Impact-metric template layer
+
+* [ ] **Add `types/ImpactMetricTemplate.ts`**
+
+  * [ ] Define the type (`id`, `label`, `realityTemplateId`, `questionFormat`)
+* [ ] **Add `templates.ts`** in `utils/`
+
+  * [ ] Hard-code ≥ 3 example templates
+  * [ ] Include special `"custom"` template
+
+---
+
+### 3 . “Create Market” page (`/telenome/create`)
+
+* [x] **Scaffold page & route** under `app/telenome/create/page.tsx`
+* [x] **Build form UI** with shadcn/scaffold-eth inputs
+
+  * [x] Template `<Select>`
+  * [x] Subject `<Input>`
+  * [x] Deadline `<DatePicker>` (UNIX seconds)
+  * [x] Reasoning `<Textarea>`
+  * [x] “Seed liquidity” `<Checkbox>`
+* [x] **Validate inputs** (React-Hook-Form or Zod)
+* [ ] **Write to Seer**: Call `MarketFactory.createCategoricalMarket` via `useWriteContract` (or `useScaffoldWriteContract`).
+    *   [x] Determine/clarify arguments:
+        *   `collateralToken`: WXDAI on Gnosis (`0xe91D153E0b41518A2Ce8Dd3D7944Fa863463a97d`)
+        *   `oracle`: Connected user's address (from `useAccount`)
+        *   `questionId`: `keccak256(subject + userAddress + timestamp)`
+        *   `outcomes`: Parsed from form input (string array)
+        *   `deadline`: UNIX timestamp in seconds (from form input)
+        *   `fee`: Default to `200` (2%)
+        *   `metadataURI`: Placeholder string (e.g., `"ipfs://placeholder_metadata"`)
+    *   [x] Prepare arguments in `onSubmit`.
+    *   [x] Import and initialize `useScaffoldWriteContract` for `MarketFactory`.
+    *   [x] Import and use `useAccount` for user's address.
+    *   [x] Import `keccak256`, `stringToBytes`, `encodePacked` from `viem`.
+    *   [x] Call `writeContractAsync` with prepared arguments.
+    *   [x] Implement user feedback (e.g., loading, success, error messages using `react-hot-toast`).
+    *   [ ] **Next Action: Test the market creation functionality thoroughly.**
+    *   [ ] Create a confirmation screen/modal to show success messages and links (e.g., to Blockscout) to the newly created market upon successful transaction.
+    *   [ ] Refine error handling for specific contract errors if necessary.
+*   [ ] **Helper: `formatQuestion()`** from template + inputs (This might be part of metadata or questionId generation, can be revisited)
+*   [ ] **Confirmation Screen**: Show success message and link to market on Seer (or block explorer).
+*   [ ] **Optionally provide liquidity**
+
+  * [ ] If checked, call `Router.provideLiquidity` with preset collateral value
+*   [ ] **Confirmation screen**
+
+  * [ ] Show success message + Seer trade link `https://seer.pm/markets/${marketAddress}`
+
+---
+
+### 4 . Markets explorer page (`/telenome/markets`)
+
+* [ ] **Scaffold page & route** `app/telenome/markets/page.tsx`
+* [ ] **GraphQL fetch** — `markets(first: 1000)` from Seer sub-graph
+
+  * [ ] Set up React-Query/Zustand cache
+* [ ] **Post-process results**
+
+  * [ ] Split `marketName` into `templateId` + `subject`
+  * [ ] Decode current probability from pool weights
+* [ ] **Filter & search UI**
+
+  * [ ] Template filter chips
+  * [ ] Subject/full-text input
+  * [ ] Sort by implied probability
+* [ ] **Render list / cards**
+
+  * [ ] Each card: subject, template label, probability, deadline, Seer link
+
+---
+
+### 5 . Global integration & polish
+
+* [ ] **Add navigation items** (“Create Market”, “Browse Markets”) to `Header`
+* [ ] **Theme & layout pass** (Tailwind, shadcn)
+* [ ] **Wallet flow QA** using RainbowKit button
+* [ ] **Unit tests** for helpers (`formatQuestion`, template parsing)
+
+---
+
+### 6 . Gnosis mainnet deployment
+
+* [ ] **Configure env**: Gnosis RPC URL, sub-graph URL
+* [ ] **Deploy preview** to Vercel; set env vars there
+* [ ] **Smoke test**
+
+  * [ ] Create a market
+  * [ ] Verify it appears in explorer
+  * [ ] Click through; ensure trading on Seer works
+* [ ] **Write README** with local dev + deployment steps
+
+---
+
+### 7 . (Optional) fast-follow features
+
+* [ ] Scalar templates
+* [ ] Impact bounty contract stub
+* [ ] IPFS upload for evidentiary files
+* [ ] Server-side indexer for advanced queries

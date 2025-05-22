@@ -3,8 +3,9 @@ import RouterJson from "~~/contracts/abis/GnosisRouter.json";
 import MarketFactoryJson from "~~/contracts/abis/MarketFactory.json";
 import MarketViewJson from "~~/contracts/abis/MarketView.json";
 import RealityProxyJson from "~~/contracts/abis/RealityProxy.json";
+import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 
-const externalContracts = {
+const seerContracts = {
   100: {
     MarketFactory: {
       address: "0x83183DA839Ce8228E31Ae41222EaD9EDBb5cDcf1",
@@ -25,4 +26,4 @@ const externalContracts = {
   },
 } as const;
 
-export default externalContracts;
+export default seerContracts satisfies GenericContractsDeclaration;

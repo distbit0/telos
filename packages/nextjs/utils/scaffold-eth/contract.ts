@@ -277,7 +277,7 @@ export type EventFilters<
     : {
         [Key in IsContractDeclarationMissing<
           any,
-          IndexedEventInputs<TContractName, TEventName>["name"]
+          Extract<IndexedEventInputs<TContractName, TEventName>["name"], string>
         >]?: AbiParameterToPrimitiveType<Extract<IndexedEventInputs<TContractName, TEventName>, { name: Key }>>;
       }
 >;
